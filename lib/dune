@@ -1,0 +1,5 @@
+(library
+ (name telegram_bot)
+ (libraries lwt cohttp-lwt-unix yojson core ppx_deriving_yojson.runtime)
+ (preprocess
+  (pps ppx_deriving_yojson)))
