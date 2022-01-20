@@ -4,4 +4,4 @@ type t
 
 val make: string -> t
 
-val get_updates: t -> (response, unit) result Lwt.t
+val get_updates: t -> offset:int -> (response, unit) result Lwt.t
