@@ -8,6 +8,8 @@ type update = {
   message: message;
 } [@@deriving yojson]
 
+type updates = update list
+
 type response = {
   result: update list;
 } [@@deriving yojson]
