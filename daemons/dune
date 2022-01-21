@@ -1,0 +1,11 @@
+(library
+ (name daemons)
+ (libraries
+  lwt
+  cohttp-lwt-unix
+  yojson
+  core
+  ppx_deriving_yojson.runtime
+  bot_client)
+ (preprocess
+  (pps ppx_deriving_yojson)))

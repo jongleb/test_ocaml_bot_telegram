@@ -1,5 +1,5 @@
 (library
  (name check_url)
- (libraries lwt cohttp-lwt-unix yojson core ppx_deriving_yojson.runtime)
+ (libraries lwt cohttp-lwt-unix ppx_deriving_yojson.runtime)
  (preprocess
   (pps ppx_deriving_yojson)))
