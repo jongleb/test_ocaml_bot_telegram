@@ -40,4 +40,4 @@ let ping { timeout; url } =
 
   match result with
   | `Done(r, b) -> done_to_success url r b
-  | `Timeout -> Lwt.return (Timeout(diff))
+  | `Timeout -> Lwt.return (Timeout({ timeout=diff; url; }))

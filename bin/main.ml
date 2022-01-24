@@ -3,4 +3,9 @@
 open Bot_client *)
 open Daemons
 
-let () = Lwt_main.run (Telegram_bot_updates_daemon.handle_pings ())
+let () = 
+  let daemon =
+     Telegram_bot_check_urls_daemon.init
+      ~check_timeout:10.
+      ~timeout:10. ["https://mock.codes/420"] in 
+  Lwt_main.run (Telegram_bot_check_urls_daemon.run daemon)

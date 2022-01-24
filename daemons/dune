@@ -1,6 +1,7 @@
 (library
  (name daemons)
  (libraries
+  base
   lwt
   cohttp-lwt-unix
   yojson

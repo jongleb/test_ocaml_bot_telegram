@@ -3,6 +3,7 @@ open Lwt.Syntax
 open Cohttp_lwt_unix
 
 include Telegram_bot_client_response
+include Telegram_bot_client_request
 
 type t = { token: string }
 
@@ -25,3 +26,16 @@ let get_updates { token } ~offset  =
     |> Yojson.Safe.from_string 
     |> response_of_yojson 
     |> Result.map_error (Fun.const ())
+
+let send_message { token } ~chat_id ~text =
+
+  let url = base_telegram_uri ^ "/bot" ^ token ^ "/sendMessage" |> Uri.of_string in
+
+  let body = { chat_id; text; } 
+    |> request_to_yojson 
+    |> Yojson.Safe.to_string 
+    |> Cohttp_lwt.Body.of_string in
+
+  let* (_, b) = Client.post ~body url in
+
+  Lwt.return_unit
