@@ -1,5 +1,12 @@
 (library
  (name bot_client)
- (libraries lwt cohttp-lwt-unix yojson core ppx_deriving_yojson.runtime)
+ (libraries
+  lwt
+  cohttp-lwt-unix
+  yojson
+  core
+  ppx_deriving_yojson.runtime
+  lwt_ssl
+  ssl)
  (preprocess
   (pps ppx_deriving_yojson)))

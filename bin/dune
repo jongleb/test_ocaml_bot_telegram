@@ -1,4 +1,4 @@
 (executable
  (public_name telegram_bot)
  (name main)
- (libraries bot_client check_url))
+ (libraries bot_client check_url daemons))

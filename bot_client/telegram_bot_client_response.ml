@@ -1,15 +1,15 @@
 
 type message = {
   text: string;
-} [@@deriving yojson]
+} [@@deriving yojson { strict = false}]
 
 type update = {
   update_id: int;
   message: message;
-} [@@deriving yojson]
+} [@@deriving yojson { strict = false}]
 
 type updates = update list
 
 type response = {
   result: update list;
-} [@@deriving yojson]
+} [@@deriving yojson { strict = false}]

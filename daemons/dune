@@ -6,6 +6,7 @@
   yojson
   core
   ppx_deriving_yojson.runtime
-  bot_client)
+  bot_client
+  check_url)
  (preprocess
   (pps ppx_deriving_yojson)))

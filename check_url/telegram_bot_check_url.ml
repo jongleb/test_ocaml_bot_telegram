@@ -21,15 +21,12 @@ let compute ~time ~f =
 
 let done_to_success url r b = 
   let code = r |> Response.status |> Cohttp.Code.code_of_status in
-  let* body = Cohttp_lwt.Body.to_string b in
+  let+ body = Cohttp_lwt.Body.to_string b in
 
-  let matched = 
-    if code == 200 then 
-      Success
-    else
-      Fail({ url; code; body }) in
-      
-  Lwt.return matched
+  if code == 200 then 
+    Success
+  else
+    Fail({ url; code; body }) 
 
 
 let ping { timeout; url } = 
