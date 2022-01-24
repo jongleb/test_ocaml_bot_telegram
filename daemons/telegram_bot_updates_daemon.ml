@@ -21,7 +21,10 @@ let handle_result { result } =
   Lwt_list.iter_s(
     fun i -> match i.message.text with
       | "/start" -> Lwt.return (Telegram_bot_chats_store.add i.message.chat.id)
-      | "/ping" -> Lwt.return_unit
+      | "/ping" -> Lwt.return_unit (* сheck_url
+       который он чекает и timeout зы таймаут в
+       не понятно до конца
+        случае таймаута или просто конфиг таймут *)
       | _ -> Lwt.return_unit
   ) result
 
