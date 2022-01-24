@@ -3,12 +3,12 @@ type chat = {
 } [@@deriving yojson { strict = false}]
 type message = {
   text: string;
+  chat: chat;
 } [@@deriving yojson { strict = false}]
 
 type update = {
   update_id: int;
   message: message;
-  chat: chat;
 } [@@deriving yojson { strict = false}]
 
 type updates = update list

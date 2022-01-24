@@ -3,7 +3,6 @@ open Lwt.Syntax
 open Cohttp_lwt_unix
 
 include Telegram_bot_client_response
-include Telegram_bot_client_request
 
 type t = { token: string }
 
@@ -17,7 +16,7 @@ let get_updates { token } ~offset  =
 
   let with_query = base_telegram_uri ^ "/bot" ^ token ^ "/getUpdates"
     |> Uri.of_string 
-    |> Uri.with_query' in  
+    |> Uri.with_query' in
 
   let* (_ , b) = Client.get (with_query query) in
   let+ json_str = b |> Cohttp_lwt.Body.to_string in
@@ -29,13 +28,12 @@ let get_updates { token } ~offset  =
 
 let send_message { token } ~chat_id ~text =
 
-  let url = base_telegram_uri ^ "/bot" ^ token ^ "/sendMessage" |> Uri.of_string in
+  let query = [("chat_id", Int.to_string chat_id); ("text", text)] in
 
-  let body = { chat_id; text; } 
-    |> request_to_yojson 
-    |> Yojson.Safe.to_string 
-    |> Cohttp_lwt.Body.of_string in
-
-  let* (_, b) = Client.post ~body url in
+  let with_query = base_telegram_uri ^ "/bot" ^ token ^ "/sendMessage"
+    |> Uri.of_string 
+    |> Uri.with_query' in
+  
+  let* _ = Client.post (with_query query) in
 
   Lwt.return_unit

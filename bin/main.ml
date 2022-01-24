@@ -1,11 +1,15 @@
-(* open Lwt.Syntax
-
-open Bot_client *)
 open Daemons
+open Lwt.Syntax
 
-let () = 
+let run_tasks () = 
   let daemon =
      Telegram_bot_check_urls_daemon.init
-      ~check_timeout:10.
-      ~timeout:10. ["https://mock.codes/420"] in 
-  Lwt_main.run (Telegram_bot_check_urls_daemon.run daemon)
+      ~check_timeout:3.
+      ~timeout:3. ["https://mock.codes/420"] in
+  let* _ = Lwt.all[
+    Telegram_bot_check_urls_daemon.run daemon;
+    Telegram_bot_updates_daemon.handle_pings()
+  ] in
+  Lwt.return_unit
+
+let () = Lwt_main.run(run_tasks())

@@ -20,7 +20,7 @@ let handle_result { result } =
   let () = Telegram_bot_updates_store.save_offset offset in
   Lwt_list.iter_s(
     fun i -> match i.message.text with
-      | "/start" -> Lwt.return (Telegram_bot_chats_store.add i.chat.id)
+      | "/start" -> Lwt.return (Telegram_bot_chats_store.add i.message.chat.id)
       | "/ping" -> Lwt.return_unit
       | _ -> Lwt.return_unit
   ) result
@@ -29,6 +29,10 @@ let handle_result { result } =
 let rec handle_pings () =
   let* response = fetch_updates() in
 
-  match response with
-  | Ok(r) -> handle_result r
-  | _ -> Lwt_io.print "kibana log"
+  let* () = match response with
+    | Ok(r) -> handle_result r
+    | _ -> Lwt_io.print "kibana log updates fail" in
+
+  let* () = Lwt_unix.sleep 3. in
+
+  handle_pings()
